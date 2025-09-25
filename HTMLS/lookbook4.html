@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOOKBOOK 1 - Fotos Fijas</title>
+<style>
+body {
+  margin: 0;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  background: url('cemento.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  cursor: none;
+}
+
+/* Cursor personalizado */
+#cursor {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+/* Grid 3x3 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 1rem;
+  justify-items: center;
+}
+
+.marco {
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.marco:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+.marco img {
+  max-width: 220px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Lightbox dinámico */
+.lightbox {
+  position: fixed;
+  top:0; left:0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 999;
+}
+.lightbox.active {
+  opacity: 1;
+  visibility: visible;
+}
+.lightbox img {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+  border: 6px solid #fff;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  transition: opacity 0.3s ease;
+}
+
+/* Botones */
+.cerrar, .prev, .next {
+  position: absolute;
+  font-size: 2rem;
+  color: #fff;
+  background: rgba(0,0,0,0.3);
+  padding: 0.2em 0.6em;
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.3s, color 0.3s;
+}
+.cerrar:hover, .prev:hover, .next:hover { background: rgba(0,0,0,0.6); }
+.cerrar { top:20px; right:20px; }
+.prev { left:20px; top:50%; transform: translateY(-50%); font-size:3rem; }
+.next { right:20px; top:50%; transform: translateY(-50%); font-size:3rem; }
+
+/* Flecha única */
+.flecha {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 2rem;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  z-index: 1000;
+  transition: transform 0.2s, background 0.3s;
+}
+.flecha:hover {
+  transform: scale(1.1);
+  background: rgba(0,0,0,0.8);
+}
+</style>
+</head>
+<body>
+
+<img src="mariposa_cursor.png" id="cursor" alt="cursor">
+
+<!-- Flecha única -->
+<a href="ecler.html" class="flecha" id="flecha">←</a>
+
+<div class="grid">
+  <div class="marco"><img src="p1.png" alt=""></div>
+  <div class="marco"><img src="p2.png" alt=""></div>
+  <div class="marco"><img src="p3.png" alt=""></div>
+  <div class="marco"><img src="p4.png" alt=""></div>
+  <div class="marco"><img src="p5.png" alt=""></div>
+  <div class="marco"><img src="p6.png" alt=""></div>
+  <div class="marco"><img src="p7.png" alt=""></div>
+  <div class="marco"><img src="p8.png" alt=""></div>
+  <div class="marco"><img src="p9.png" alt=""></div>
+  <div class="marco"><img src="p10.png" alt=""></div>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <span class="cerrar">×</span>
+  <span class="prev">‹</span>
+  <img src="" alt="">
+  <span class="next">›</span>
+</div>
+
+<script>
+// Cursor
+const cursor = document.getElementById("cursor");
+document.addEventListener("mousemove", e => {
+  cursor.style.left = e.clientX + "px";
+  cursor.style.top = e.clientY + "px";
+});
+
+// Lightbox dinámico
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = lightbox.querySelector("img");
+const images = document.querySelectorAll(".grid .marco img");
+let currentIndex = 0;
+
+const flecha = document.getElementById("flecha");
+
+// Abrir lightbox y cambiar la flecha
+images.forEach((img, i) => {
+  img.addEventListener("click", () => {
+    currentIndex = i;
+    lightboxImg.src = img.src;
+    lightbox.classList.add("active");
+    flecha.href = "lookbook4.html"; // dentro del lightbox apunta a lookbook4
+  });
+});
+
+// Cerrar lightbox y restaurar flecha
+lightbox.querySelector(".cerrar").addEventListener("click", () => {
+  lightbox.classList.remove("active");
+  flecha.href = "ecler.html"; // fuera del lightbox apunta a ecler
+});
+
+// Navegación prev/next con fade
+function showImage(index) {
+  lightboxImg.style.opacity = 0;
+  currentIndex = (index + images.length) % images.length;
+  setTimeout(() => {
+    lightboxImg.src = images[currentIndex].src;
+    lightboxImg.style.opacity = 1;
+  }, 200);
+}
+
+lightbox.querySelector(".prev").addEventListener("click", () => showImage(currentIndex - 1));
+lightbox.querySelector(".next").addEventListener("click", () => showImage(currentIndex + 1));
+
+// Teclado
+document.addEventListener("keydown", e => {
+  if(!lightbox.classList.contains("active")) return;
+  if(e.key === "ArrowRight") showImage(currentIndex + 1);
+  if(e.key === "ArrowLeft") showImage(currentIndex - 1);
+  if(e.key === "Escape") {
+    lightbox.classList.remove("active");
+    flecha.href = "ecler.html"; // restaurar cuando se cierra con Escape
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LOOKBOOK 1 - Fotos/Vídeos</title>
+<style>
+  :root{ --gap:1rem; --card-w:220px; }
+  body{
+  margin:0; 
+  padding:2rem; 
+  font-family:Arial,Helvetica,sans-serif;
+  background:url('cemento.jpg') no-repeat center center fixed; 
+  background-size:cover;
+  display:flex; 
+  flex-direction: column; /* <--- importante */
+  align-items: center;    /* centra todo horizontalmente */
+  cursor:none;
+}
+
+  .intro-text {
+  max-width: 700px;          /* Limita el ancho a un tamaño similar a las fotos */
+  margin: 2rem auto;         /* Separación superior e inferior, centrado */
+  background: rgba(255,255,255,0.7);  /* Fondo semitransparente */
+  padding: 1.5rem 2rem;      /* Espaciado interior */
+  border-radius: 12px;       /* Bordes redondeados */
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25); /* Sombra suave */
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #222;
+  text-align: center;        /* Centra el texto */
+  backdrop-filter: blur(4px); /* Efecto de desenfoque detrás */
+}
+
+  #cursor{ position:fixed; width:40px; height:40px; pointer-events:none; transform:translate(-50%,-50%); z-index:1000; }
+  .flecha-back{
+    position:fixed; top:20px; left:20px; width:50px; height:50px; border-radius:50%;
+    background:rgba(0,0,0,.6); color:#fff; font-size:2rem; line-height:50px; text-align:center; text-decoration:none;
+    z-index:1001; transition:transform .2s, background .3s;
+  }
+  .flecha-back:hover{ transform:scale(1.1); background:rgba(0,0,0,.8); }
+
+  .grid{ display:grid; grid-template-columns:repeat(3,minmax(0,auto)); gap:var(--gap); justify-items:center; align-items:start; }
+  @media (max-width:980px){ .grid{ grid-template-columns:repeat(2,minmax(0,auto)); } }
+  @media (max-width:640px){ body{ padding:1rem; } .grid{ grid-template-columns:1fr; } }
+
+  .item{ transition:transform .3s, box-shadow .3s; will-change:transform; }
+  .item:hover{ transform:scale(1.05); box-shadow:0 10px 20px rgba(0,0,0,.4); }
+  .frame{ max-width:var(--card-w); border:4px solid #fff; box-shadow:0 4px 12px rgba(0,0,0,.3); display:block; background:#fff; overflow:hidden; }
+  .frame img,.frame video{ display:block; width:100%; height:auto; object-fit:contain; aspect-ratio:3/4; background:#fff; }
+
+  .lightbox{
+    position:fixed; inset:0; background:rgba(0,0,0,.85); display:flex; justify-content:center; align-items:center;
+    opacity:0; visibility:hidden; transition:opacity .3s ease; z-index:999;
+  }
+  .lightbox.active{ opacity:1; visibility:visible; }
+  .lightbox-inner{ max-width:90vw; max-height:90vh; display:flex; align-items:center; justify-content:center; }
+  .lightbox img,.lightbox video{
+    max-width:90vw; max-height:90vh; object-fit:contain; border:6px solid #fff; box-shadow:0 6px 20px rgba(0,0,0,.5);
+    transition:opacity .3s ease; background:#000;
+  }
+  .cerrar,.prev,.next{
+    position:absolute; font-size:2rem; color:#fff; background:rgba(0,0,0,.3);
+    padding:.2em .6em; border-radius:50%; cursor:pointer; user-select:none; transition:background .3s, color .3s;
+  }
+  .cerrar:hover,.prev:hover,.next:hover{ background:rgba(0,0,0,.6); }
+  .cerrar{ top:20px; right:20px; } .prev{ left:20px; top:50%; transform:translateY(-50%); font-size:3rem; }
+  .next{ right:20px; top:50%; transform:translateY(-50%); font-size:3rem; }
+  .lightbox-bg{ position:absolute; inset:0; }
+</style>
+</head>
+<body>
+
+  <img src="mariposa_cursor.png" id="cursor" alt="cursor" />
+  <a href="fashion.html" class="flecha-back" id="flechaBack" aria-label="Volver">←</a>
+
+ <div class="grid" id="grid">
+  <!-- 1 -->
+  <div class="item" data-type="image" data-src="panti1.png">
+    <span class="frame"><img src="panti1.png" alt="panti1"></span>
+  </div>
+  <!-- 2 -->
+  <div class="item" data-type="video" data-src="videoPANTI.mp4">
+    <span class="frame"><video src="videoPANTI.mp4" muted loop playsinline autoplay></video></span>
+  </div>
+  <!-- 3 -->
+  <div class="item" data-type="image" data-src="panti2.png">
+    <span class="frame"><img src="panti2.png" alt="panti2"></span>
+  </div>
+  <!-- 4 -->
+  <div class="item" data-type="image" data-src="POLO1.jpeg">
+    <span class="frame"><img src="POLO1.jpeg" alt="POLO1"></span>
+  </div>
+  <!-- 5 -->
+  <div class="item" data-type="video" data-src="VIDEOPOLO.mp4">
+    <span class="frame"><video src="VIDEOPOLO.mp4" muted loop playsinline autoplay></video></span>
+  </div>
+  <!-- 6 -->
+  <div class="item" data-type="image" data-src="POLO2.jpeg">
+    <span class="frame"><img src="POLO2.jpeg" alt="POLO2"></span>
+  </div>
+  <!-- 7 -->
+  <div class="item" data-type="image" data-src="FLOR5.jpeg">
+    <span class="frame"><img src="FLOR5.jpeg" alt="FLOR5"></span>
+  </div>
+  <!-- 8 -->
+  <div class="item" data-type="video" data-src="FLORVIDEO.mp4">
+    <span class="frame"><video src="FLORVIDEO.mp4" muted loop playsinline autoplay></video></span>
+  </div>
+  <!-- 9 -->
+  <div class="item" data-type="image" data-src="FLOR6.jpeg">
+    <span class="frame"><img src="FLOR6.jpeg" alt="FLOR6"></span>
+  </div>  
+  <!-- 10 -->
+  <div class="item" data-type="image" data-src="FLOR3.jpeg">
+    <span class="frame"><img src="FLOR3.jpeg" alt="FLOR6"></span>
+  </div>
+  <!-- 11 -->
+  <div class="item" data-type="video" data-src="VIDEOFLOR2.mp4">
+    <span class="frame"><video src="VIDEOFLOR2.mp4" muted loop playsinline autoplay></video></span>
+  </div>
+  <!-- 12 -->
+  <div class="item" data-type="image" data-src="FLOR2.jpeg">
+    <span class="frame"><img src="FLOR2.jpeg" alt="FLOR2"></span>
+  </div>
+  <!-- 13 -->
+  <div class="item" data-type="image" data-src="COZKO1.jpeg">
+    <span class="frame"><img src="COZKO1.jpeg" alt="COZKO1"></span>
+  </div>
+  <!-- 14 -->
+  <div class="item" data-type="video" data-src="COZKOVIDEO.mp4">
+    <span class="frame"><video src="COZKOVIDEO.mp4" muted loop playsinline autoplay></video></span>
+  </div>
+  <!-- 15 -->
+  <div class="item" data-type="image" data-src="COZKO3.jpeg">
+    <span class="frame"><img src="COZKO3.jpeg" alt="COZKO3"></span>
+  </div>
+  <!-- 16 -->
+  <div class="item" data-type="image" data-src="BLAZE1.jpeg">
+    <span class="frame"><img src="BLAZE1.jpeg" alt="BLAZE1"></span>
+  </div>
+  <!-- 17 -->
+  <div class="item" data-type="video" data-src="BLAZEVIDEO.mp4">
+    <span class="frame"><video src="BLAZEVIDEO.mp4" muted loop playsinline autoplay></video></span>
+  </div>
+  <!-- 18 -->
+  <div class="item" data-type="image" data-src="BLAZE3.jpeg">
+    <span class="frame"><img src="BLAZE3.jpeg" alt="BLAZE3"></span>
+  </div>
+  <!-- 19 -->
+  <div class="item" data-type="image" data-src="victory1.jpeg">
+    <span class="frame"><img src="victory1.jpeg" alt="victory1"></span>
+  </div>
+  <!-- 20 -->
+  <div class="item" data-type="video" data-src="VICTORYVIDEO.mp4">
+    <span class="frame"><video src="VICTORYVIDEO.mp4" muted loop playsinline autoplay></video></span>
+  </div>
+  <!-- 21 -->
+  <div class="item" data-type="image" data-src="victory3.jpeg">
+    <span class="frame"><img src="victory3.jpeg" alt="victory3"></span>
+  </div>
+  <!-- 22 -->
+  <div class="item" data-type="image" data-src="GAP4.jpeg">
+    <span class="frame"><img src="GAP4.jpeg" alt="GAP4"></span>
+  </div>
+  <!-- 23 -->
+  <div class="item" data-type="video" data-src="VIDEOGAP.mp4">
+    <span class="frame"><video src="VIDEOGAP.mp4" muted loop playsinline autoplay></video></span>
+  </div>
+  <!-- 24 -->
+  <div class="item" data-type="image" data-src="GAP2.jpeg">
+    <span class="frame"><img src="GAP2.jpeg" alt="GAP2"></span>
+  </div>
+  <!-- 25 -->
+  <div class="item" data-type="image" data-src="UNIVERSITY2.png">
+    <span class="frame"><img src="UNIVERSITY2.png" alt="UNIVERSITY2"></span>
+  </div>
+  <!-- 26 -->
+  <div class="item" data-type="video" data-src="VIDEOUNIVERSITY.mp4">
+    <span class="frame"><video src="VIDEOUNIVERSITY.mp4" muted loop playsinline autoplay></video></span>
+  </div>
+  <!-- 27 -->
+  <div class="item" data-type="image" data-src="UNIVERSITY3.jpeg">
+    <span class="frame"><img src="UNIVERSITY3.jpeg" alt="UNIVERSITY3"></span>
+  </div>
+  <!-- 28 -->
+  <div class="item" data-type="image" data-src="PAYSAGE3.png">
+    <span class="frame"><img src="PAYSAGE3.png" alt="PAYSAGE3"></span>
+  </div>
+  <!-- 29 -->
+  <div class="item" data-type="video" data-src="PAYSAGEVIDEO.mp4">
+    <span class="frame"><video src="PAYSAGEVIDEO.mp4" muted loop playsinline autoplay></video></span>
+  </div>
+  <!-- 30 -->
+  <div class="item" data-type="image" data-src="PAYSAGE2.jpeg">
+    <span class="frame"><img src="PAYSAGE2.jpeg" alt="PAYSAGE2"></span>
+  </div>
+</div>
+<div class="intro-text">
+  <p>
+    <strong>Ecler is my brand, blending digital innovation with storytelling. Garments are patterned in CLO 3D, with graphic design in Illustrator and Photoshop, then produced physically and released for sale. Final visuals are rendered in Seedream 4.</strong></p>
+</div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-bg" data-close></div>
+    <span class="cerrar" title="Cerrar" data-close>×</span>
+    <span class="prev" title="Anterior">‹</span>
+    <div class="lightbox-inner">
+      <img id="lbImg" src="" alt="" style="display:none; opacity:0;">
+      <video id="lbVideo" src="" controls style="display:none; opacity:0;" playsinline></video>
+    </div>
+    <span class="next" title="Siguiente">›</span>
+  </div>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e=>{
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+  });
+
+  // Lightbox
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbVideo = document.getElementById('lbVideo');
+  const btnPrev = lightbox.querySelector('.prev');
+  const btnNext = lightbox.querySelector('.next');
+  const flechaBack = document.getElementById('flechaBack');
+
+  const items = Array.from(document.querySelectorAll('.grid .item'));
+  let currentIndex = 0;
+
+  function openItem(index){
+    currentIndex = (index + items.length) % items.length;
+    const el = items[currentIndex];
+    const type = el.dataset.type;
+    const src  = el.dataset.src;
+
+    lbImg.style.opacity = 0; lbVideo.style.opacity = 0;
+    lbVideo.pause();
+
+    if(type === 'image'){
+      lbVideo.style.display = 'none';
+      lbImg.style.display = 'block';
+      lbImg.src = src;
+      requestAnimationFrame(()=>{ lbImg.style.opacity = 1; });
+    }else{
+      lbImg.style.display = 'none';
+      lbVideo.style.display = 'block';
+      lbVideo.src = src;
+      lbVideo.play().catch(()=>{});
+      requestAnimationFrame(()=>{ lbVideo.style.opacity = 1; });
+    }
+
+    lightbox.classList.add('active');
+    lightbox.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    flechaBack.href = 'lookbook1.html';
+  }
+
+  function closeLightbox(){
+    lightbox.classList.remove('active');
+    lightbox.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    flechaBack.href = 'ecler.html';
+    lbVideo.pause();
+  }
+
+  function showPrev(){ openItem(currentIndex - 1); }
+  function showNext(){ openItem(currentIndex + 1); }
+
+  items.forEach((el,i)=> el.addEventListener('click', ()=>openItem(i)));
+  lightbox.querySelectorAll('[data-close]').forEach(el=> el.addEventListener('click', closeLightbox));
+  btnPrev.addEventListener('click', showPrev);
+  btnNext.addEventListener('click', showNext);
+
+  document.addEventListener('keydown', e=>{
+    if(!lightbox.classList.contains('active')) return;
+    if(e.key === 'ArrowRight') showNext();
+    else if(e.key === 'ArrowLeft') showPrev();
+    else if(e.key === 'Escape') closeLightbox();
+  });
+
+  document.querySelector('.lightbox-inner').addEventListener('click', e=> e.stopPropagation());
+</script>
+</body>
+</html>

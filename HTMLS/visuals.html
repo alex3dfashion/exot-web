@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PERSONAL VISUAL – Festival</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    cursor: none;
+    height: 100vh;
+    position: relative;
+  }
+
+  /* Video container */
+  .video-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    box-shadow: 0 0 30px rgba(255,255,255,0.3);
+    border-radius: 4px;
+    background: #000;
+    padding: 15px;
+    max-width: 90vw;
+    max-height: 90vh;
+  }
+  .video-container video {
+    width: 100%;
+    height: auto;
+    max-height: 80vh; /* 🔑 límite para dejar espacio al texto */
+    object-fit: contain;
+    display: block;
+  }
+
+  /* Descripción debajo del video */
+  .video-description {
+    color: #fff;
+    margin-top: 10px;
+    font-size: 1.2rem;
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+
+  /* Flechas pasar videos */
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 4rem;
+    color: #fff;
+    background: rgba(0,0,0,0.4);
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 3;
+    user-select: none;
+    transition: transform 0.2s, background 0.3s;
+  }
+  .arrow:hover {
+    transform: translateY(-50%) scale(1.1);
+    background: rgba(0,0,0,0.7);
+  }
+  .arrow-left { left: 20px; }
+  .arrow-right { right: 20px; }
+
+  /* Flecha volver */
+  .arrow-back {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 2.5rem;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 50%;
+    text-align: center;
+    color: #fff;
+    z-index: 3;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+    text-decoration: none;
+  }
+  .arrow-back:hover {
+    transform: scale(1.1);
+    background: rgba(0,0,0,0.7);
+  }
+
+  /* Cursor */
+  #cursor {
+    position: fixed;
+    width: 64px;
+    height: 64px;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+  }
+</style>
+</head>
+<body>
+
+<!-- Video container -->
+<div class="video-container" id="videoContainer">
+  <video id="mainVideo" autoplay muted playsinline></video>
+  <div id="videoDescription" class="video-description"></div>
+</div>
+
+<!-- Flechas -->
+<div class="arrow arrow-left" id="prevArrow">‹</div>
+<div class="arrow arrow-right" id="nextArrow">›</div>
+
+<!-- Flecha volver -->
+<a href="index2.html" class="arrow-back">←</a>
+
+<!-- Cursor -->
+<img src="mariposa_cursor.png" id="cursor">
+
+<script>
+  // Cursor personalizado
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.pageX + 'px';
+    cursor.style.top = e.pageY + 'px';
+  });
+
+  // Tus videos
+  const videos = [
+    'pantera.mp4','pantera1.mp4','noria.mp4','ecler2.mp4',
+    'ecler3.mp4','eclerfut.mp4','1A.mp4','2A.mp4','3A.mp4',
+    '4A.mp4','5A.mp4','TFM.mp4'
+  ];
+
+  // Descripciones
+  const descriptions = [
+   
+    "Personal panther visual",
+    "Personal grillz panther visual",
+    "Cinematic ferris wheel visual",
+    "FW visual for ecler",
+    "FW visual for ecler",
+    "Football visual for eclersports",
+    "Riverland visual for Sneaky Wh",
+    "Lettering visual for Sneaky Wh",
+    "Skeleton visual for Sneaky Wh",
+    "Cover and canvas for Daniel Mobe",
+    "Skeleton visual for Open",
+    "TFM runway"
+  ];
+
+  let currentIndex = 0;
+  const videoContainer = document.getElementById('videoContainer');
+  const mainVideo = document.getElementById('mainVideo');
+  const videoDescription = document.getElementById('videoDescription');
+
+  function showVideo(index){
+    currentIndex = (index + videos.length) % videos.length;
+    mainVideo.src = videos[currentIndex];
+    videoDescription.textContent = descriptions[currentIndex];
+    videoContainer.style.display = 'flex';
+    mainVideo.play();
+  }
+
+  function nextVideo(){ showVideo(currentIndex + 1); }
+  function prevVideo(){ showVideo(currentIndex - 1); }
+
+  document.getElementById('nextArrow').addEventListener('click', nextVideo);
+  document.getElementById('prevArrow').addEventListener('click', prevVideo);
+
+  // Ajuste dinámico del ancho según orientación
+  mainVideo.onloadedmetadata = () => {
+    const ratio = mainVideo.videoWidth / mainVideo.videoHeight;
+    if(ratio < 1){ // vertical
+      videoContainer.style.width = '40vw';
+    } else { // horizontal
+      videoContainer.style.width = '80vw';
+    }
+};
+  showVideo(0);
+    
+</script>
+
+</body>
+</html>

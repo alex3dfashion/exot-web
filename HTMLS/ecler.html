@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOOKBOOK – 4 VIDEOS</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: "Gazpacho", Arial, sans-serif;
+    height: 100vh;
+    cursor: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: #000;
+  }
+
+  /* Grid de 4 videos */
+  .grid-videos {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .grid-videos a {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    text-decoration: none;
+  }
+
+  .grid-videos video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    cursor: pointer;
+  }
+
+  .grid-videos a:hover video {
+    transform: scale(1.05);
+  }
+
+  /* Texto centrado sobre cada video */
+  .video-texto {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-shadow: 1px 1px 6px rgba(0,0,0,0.8);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  /* Botón flecha volver */
+  .flecha-back {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    font-size: 2rem;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    z-index: 1000;
+    transition: transform 0.2s, background 0.3s;
+  }
+  .flecha-back:hover {
+    transform: scale(1.1);
+    background: rgba(0,0,0,0.8);
+  }
+
+  /* Cursor personalizado */
+  #cursor {
+    position: fixed;
+    width: 64px;
+    height: 64px;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    filter: drop-shadow(0 0 6px rgba(255,255,255,0.7));
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Grid de 4 videos como enlaces con texto centrado -->
+<div class="grid-videos">
+  <a href="lookbook1.html">
+    <video autoplay loop muted playsinline src="video1.1.mp4"></video>
+    <div class="video-texto" id="texto1"></div>
+  </a>
+  <a href="lookbook2.html">
+    <video autoplay loop muted playsinline src="video2.2.mp4"></video>
+    <div class="video-texto" id="texto2"></div>
+  </a>
+  <a href="lookbook3.html">
+    <video autoplay loop muted playsinline src="video3.3.mp4"></video>
+    <div class="video-texto" id="texto3"></div>
+  </a>
+  <a href="lookbook4.html">
+    <video autoplay loop muted playsinline src="video4.4.mp4"></video>
+    <div class="video-texto" id="texto4"></div>
+  </a>
+</div>
+
+<!-- Flecha volver -->
+<a href="index2.html" class="flecha-back">←</a>
+
+<!-- Cursor -->
+<img src="mariposa_cursor.png" id="cursor" />
+
+<script>
+  // Cursor personalizado
+  const cursor = document.getElementById("cursor");
+  document.addEventListener("mousemove", e => {
+    cursor.style.left = e.pageX + "px";
+    cursor.style.top = e.pageY + "px";
+  });
+
+  // Función para escribir texto fijo
+  function escribirTextoFijo(elementoId, texto) {
+    const elemento = document.getElementById(elementoId);
+    elemento.textContent = texto;
+  }
+
+  // Textos centrados sobre cada video (ya no se animan, quedan fijos)
+  escribirTextoFijo("texto1", "Into the eclerverse SS23");
+  escribirTextoFijo("texto2", "Conflict into the verse FW23");
+  escribirTextoFijo("texto3", "La flor y la paloma SS24");
+  escribirTextoFijo("texto4", "Panzzers (eclersports)");
+</script>
+
+</body>
+</html>

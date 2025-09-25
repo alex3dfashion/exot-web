@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOOKBOOK – 4 VIDEOS</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Gazpacho", Arial, sans-serif;
+    cursor: none;
+    background: #000;
+    overflow: hidden; /* para que no haya scroll si no quieres */
+  }
+
+  /* Grid de videos 2 por fila */
+  .grid-videos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+
+  .grid-videos a {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .grid-videos video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* llena la celda completamente sin franjas negras */
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .grid-videos a:hover video {
+    transform: scale(1.05);
+  }
+
+  /* Texto centrado en medio de cada video */
+  .video-texto {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-shadow: 1px 1px 6px rgba(0,0,0,0.8);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  /* Botón flecha volver */
+  .flecha-back {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    font-size: 2rem;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    z-index: 1000;
+    transition: transform 0.2s, background 0.3s;
+  }
+  .flecha-back:hover {
+    transform: scale(1.1);
+    background: rgba(0,0,0,0.8);
+  }
+
+  /* Cursor personalizado */
+  #cursor {
+    position: fixed;
+    width: 64px;
+    height: 64px;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    filter: drop-shadow(0 0 6px rgba(255,255,255,0.7));
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-videos">
+  <a href="ecler2.html">
+    <video autoplay loop muted playsinline src="BLAZEVIDEO.mp4"></video>
+    <div class="video-texto" id="texto1"></div>
+  </a>
+  <a href="PERSONALDESIGN.html">
+    <video autoplay loop muted playsinline src="VIDEO7PERSONAL.mp4"></video>
+    <div class="video-texto" id="texto2"></div>
+  </a>
+  <a href="TFM.html">
+    <video autoplay loop muted playsinline src="video3informal.mp4"></video>
+    <div class="video-texto" id="texto3"></div>
+  </a>
+  <a href="ZIONE.html">
+    <video autoplay loop muted playsinline src="VIDEO8.mp4"></video>
+    <div class="video-texto" id="texto4"></div>
+  </a>
+</div>
+
+<!-- Flecha volver -->
+<a href="index2.html" class="flecha-back">←</a>
+
+<!-- Cursor -->
+<img src="mariposa_cursor.png" id="cursor" />
+
+<script>
+  // Cursor personalizado
+  const cursor = document.getElementById("cursor");
+  document.addEventListener("mousemove", e => {
+    cursor.style.left = e.pageX + "px";
+    cursor.style.top = e.pageY + "px";
+  });
+
+  // Colocar nombres centrados sobre cada video
+  function escribirTextoFijo(elementoId, texto) {
+    const elemento = document.getElementById(elementoId);
+    elemento.textContent = texto;
+  }
+
+  escribirTextoFijo("texto1", "ECLER");
+  escribirTextoFijo("texto2", "PERSONAL DESIGN");
+  escribirTextoFijo("texto3", "PUÑICOS");
+  escribirTextoFijo("texto4", "ZIONE");
+</script>
+
+</body>
+</html>

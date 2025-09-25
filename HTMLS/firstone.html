@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOOKBOOK 1</title>
+<style>
+  body {
+    margin: 0;
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  /* Fotos pequeñas estilo "colgadas" */
+  .foto {
+    width: 200px;
+    height: auto;
+    border: 4px solid #fff;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    transform: rotate(calc(-5deg + 10deg * var(--r)));
+    transition: transform 0.3s;
+    cursor: pointer;
+  }
+  .foto:hover {
+    transform: scale(1.05) rotate(0deg);
+  }
+
+  /* Lightbox para verlas grandes */
+  .lightbox {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  .lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    border: 6px solid #fff;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  }
+  .lightbox:target {
+    display: flex;
+  }
+
+  /* Botón cerrar */
+  .cerrar {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 2rem;
+    color: #fff;
+    text-decoration: none;
+    background: rgba(0,0,0,0.6);
+    padding: 0.2em 0.6em;
+    border-radius: 50%;
+  }
+  .cerrar:hover {
+    background: rgba(0,0,0,0.9);
+  }
+
+  /* Flecha para volver */
+  .flecha-back {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    font-size: 2rem;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    z-index: 1000;
+    transition: transform 0.2s, background 0.3s;
+  }
+  .flecha-back:hover {
+    transform: scale(1.1);
+    background: rgba(0,0,0,0.8);
+  }
+</style>
+</head>
+<body>
+
+<!-- Flecha volver -->
+<a href="index2.html" class="flecha-back">←</a>
+
+<!-- Fotos colgadas -->
+<a href="#img1"><img src="f1.jpg" alt="foto 1" class="foto" style="--r:0;"></a>
+<a href="#img2"><img src="f2.jpg" alt="foto 2" class="foto" style="--r:1;"></a>
+<a href="#img3"><img src="f3.jpg" alt="foto 3" class="foto" style="--r:2;"></a>
+<a href="#img4"><img src="f4.jpg" alt="foto 4" class="foto" style="--r:3;"></a>
+<a href="#img5"><img src="f5.jpg" alt="foto 5" class="foto" style="--r:0;"></a>
+<a href="#img6"><img src="f6.jpg" alt="foto 6" class="foto" style="--r:1;"></a>
+<a href="#img7"><img src="f7.jpg" alt="foto 7" class="foto" style="--r:2;"></a>
+<a href="#img8"><img src="f8.jpg" alt="foto 8" class="foto" style="--r:3;"></a>
+
+<!-- Lightboxes -->
+<div class="lightbox" id="img1">
+  <a href="#" class="cerrar">×</a>
+  <img src="f1.jpg" alt="">
+</div>
+<div class="lightbox" id="img2">
+  <a href="#" class="cerrar">×</a>
+  <img src="f2.jpg" alt="">
+</div>
+<div class="lightbox" id="img3">
+  <a href="#" class="cerrar">×</a>
+  <img src="f3.jpg" alt="">
+</div>
+<div class="lightbox" id="img4">
+  <a href="#" class="cerrar">×</a>
+  <img src="f4.jpg" alt="">
+</div>
+<div class="lightbox" id="img5">
+  <a href="#" class="cerrar">×</a>
+  <img src="f5.jpg" alt="">
+</div>
+<div class="lightbox" id="img6">
+  <a href="#" class="cerrar">×</a>
+  <img src="f6.jpg" alt="">
+</div>
+<div class="lightbox" id="img7">
+  <a href="#" class="cerrar">×</a>
+  <img src="f7.jpg" alt="">
+</div>
+<div class="lightbox" id="img8">
+  <a href="#" class="cerrar">×</a>
+  <img src="f8.jpg" alt="">
+</div>
+
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALEX – MARTÍNEZ ESQUITINO</title>
+<style>
+  @font-face {
+    font-family: "Gazpacho";
+    src: url("gazpacho2.woff2") format("woff2"),
+         url("gazpacho2.woff") format("woff"),
+         url("gazpacho2.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Gazpacho", Arial, sans-serif;
+    overflow: hidden;
+    cursor: none;
+    background: #000;
+  }
+
+  /* Video de fondo */
+  #video-fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+  }
+
+  /* Contenedor principal */
+  .contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    text-align: center;
+    color: #000000;
+  }
+
+  /* Logo ALEX con estilo cómic */
+  .logo span {
+    font-size: 8rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #ffffff; /* azul claro */
+   
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    letter-spacing: 6px;
+  }
+
+  /* Menú con óvalos */
+  .menu {
+    margin-top: 3rem;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
+  .menu li {
+    background: rgba(255,255,255,0.15);
+    display: inline-block;
+    padding: 0.4em 0.9em;
+    border-radius: 50px;
+  }
+
+  /* Enlaces del menú: siempre naranjas */
+  .menu a,
+  .menu a:visited,
+  .menu a:hover,
+  .menu a:active {
+    color: rgb(255, 136, 0);
+    text-decoration: none;
+  }
+
+  /* Cursor */
+  #cursor {
+    position: fixed;
+    width: 64px;
+    height: 64px;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+  }
+</style>
+</head>
+<body>
+
+<!-- Video de fondo -->
+<video id="video-fondo" autoplay loop muted playsinline>
+  <source src="video.mp4" type="video/mp4">
+  Tu navegador no soporta video.
+</video>
+
+<!-- Contenido principal -->
+<div class="contenedor">
+  <div class="logo">
+    <span id="alex"></span>
+  </div>
+
+  <ol class="menu">
+    <li><a href="ecler.html">ECLER</a></li>
+    <li><a href="fashion.html">FASHION DESIGNER</a></li>
+    <li><a href="visuals.html">VISUALS</a></li>
+  </ol>
+</div>
+
+<!-- Cursor -->
+<img src="mariposa_cursor.png" id="cursor" />
+
+<script>
+  // Cursor
+  const cursor = document.getElementById("cursor");
+  document.addEventListener("mousemove", e => {
+    cursor.style.left = e.pageX + "px";
+    cursor.style.top = e.pageY + "px";
+  });
+
+  // Efecto “apareciendo letra por letra” para ALEX
+  const texto = "ALEX";
+  const elemento = document.getElementById("alex");
+  let i = 0;
+
+  function escribir() {
+    if (i < texto.length) {
+      elemento.textContent += texto.charAt(i);
+      i++;
+      setTimeout(escribir, 400); // velocidad
+    } else {
+      setTimeout(() => {
+        elemento.textContent = "";
+        i = 0;
+        escribir();
+      }, 2000); // reinicio
+    }
+  }
+
+  escribir();
+</script>
+
+</body>
+</html>
